@@ -1,4 +1,4 @@
-package balassi_ai.core;
+package org.balassiai.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -132,6 +132,8 @@ public class OpenAiApiServiceBuilder
             URL endpoint = new URL(url);
             HttpURLConnection connection = (HttpURLConnection) endpoint.openConnection();
             connection.setRequestMethod("POST");
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36");
+
             connection.setRequestProperty("Content-Type", "application/json");
 
             if (apiKey != null && !apiKey.isEmpty())

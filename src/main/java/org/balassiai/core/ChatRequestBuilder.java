@@ -1,6 +1,6 @@
-package balassi_ai.core;
+package org.balassiai.core;
 
-import balassi_ai.EmptyMessageException;
+import com.szkkr.pepperai.backend.balassiai.EmptyMessageException;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
@@ -11,6 +11,7 @@ public class ChatRequestBuilder
 {
     private String model;
     private List<Message> messages;
+    private float temperature = 1f;
 
     public ChatRequestBuilder()
     {
@@ -19,6 +20,14 @@ public class ChatRequestBuilder
 
     public ChatRequestBuilder(@JsonProperty("model") String model,
                               @JsonProperty("messages") List<Message> messages)
+    {
+        this.model = model;
+        this.messages = messages != null ? messages : new ArrayList<>();
+    }
+
+    public ChatRequestBuilder(@JsonProperty("model") String model,
+                              @JsonProperty("messages") List<Message> messages,
+                              @JsonProperty("temperature") float temperature)
     {
         this.model = model;
         this.messages = messages != null ? messages : new ArrayList<>();
@@ -73,7 +82,18 @@ public class ChatRequestBuilder
 
     public ChatRequest build()
     {
-        return new ChatRequestImpl(model, messages);
+        return new ChatRequestImpl(model, messages, getTemperature());
+    }
+
+    public float getTemperature()
+    {
+        return temperature;
+    }
+
+    public ChatRequestBuilder setTemperature(float temperature)
+    {
+        this.temperature = temperature;
+        return this;
     }
 
     // Private immutable implementation of ChatRequest.
@@ -81,12 +101,14 @@ public class ChatRequestBuilder
     {
         private final String model;
         private final List<Message> messages;
+        private final float temperature;
 
-        public ChatRequestImpl(String model, List<Message> messages)
+        public ChatRequestImpl(String model, List<Message> messages, float temperature)
         {
             this.model = model;
             // Create a defensive copy for immutability.
             this.messages = messages != null ? new ArrayList<>(messages) : new ArrayList<>();
+            this.temperature = temperature;
         }
 
         @Override
@@ -99,6 +121,12 @@ public class ChatRequestBuilder
         public List<Message> getMessages()
         {
             return Collections.unmodifiableList(messages);
+        }
+
+        @Override
+        public float getTemperature()
+        {
+            return this.temperature;
         }
     }
 }

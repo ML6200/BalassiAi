@@ -1,4 +1,4 @@
-package balassi_ai.annotations;
+package org.balassiai.annotations;
 
 import java.lang.annotation.*;
 

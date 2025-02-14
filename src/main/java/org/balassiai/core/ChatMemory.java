@@ -1,7 +1,7 @@
-package balassi_ai.core;
+package org.balassiai.core;
 
 
-import balassi_ai.EmptyMessageException;
+import com.szkkr.pepperai.backend.balassiai.EmptyMessageException;
 
 import java.util.ArrayList;
 import java.util.List;

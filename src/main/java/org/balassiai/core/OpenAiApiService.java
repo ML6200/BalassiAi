@@ -1,4 +1,4 @@
-package balassi_ai.core;
+package org.balassiai.core;
 
 public interface OpenAiApiService
 {

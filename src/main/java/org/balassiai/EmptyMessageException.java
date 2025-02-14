@@ -1,4 +1,4 @@
-package balassi_ai;
+package org.balassiai;
 
 public class EmptyMessageException extends Exception
 {

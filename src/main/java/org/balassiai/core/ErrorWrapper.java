@@ -1,4 +1,4 @@
-package balassi_ai.core;
+package org.balassiai.core;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
