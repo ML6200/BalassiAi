@@ -1,0 +1,45 @@
+package balassi_ai.core;
+
+
+import balassi_ai.EmptyMessageException;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ChatMemory
+{
+    private List<Message> messages = new ArrayList<>();
+    public List<Message> getMessages()
+    {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages)
+    {
+        this.messages = messages;
+    }
+
+    public void addMessage(Message message)
+    {
+        if (message.getContent().isEmpty())
+        {
+            try
+            {
+                throw new EmptyMessageException();
+            } catch (EmptyMessageException e)
+            {
+                throw new RuntimeException(e);
+            }
+        }
+        messages.add(message);
+    }
+
+    public void addUserMessage(String message) {
+
+        addMessage(new Message("user", message));
+    }
+
+    public void addSystemMessage(String message) {
+        addMessage(new Message("system", message));
+    }
+}
