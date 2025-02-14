@@ -44,7 +44,8 @@ This example demonstrates how to use the OpenAiApiService with basic functionali
 
 ```java
 
-OpenAiApiService apiService = new GroqApiServiceBuilder("API_KEY");
+OpenAiApiService apiService = new GroqApiServiceBuilder("API_KEY")
+        .build();
 
 ChatMemory memory = new ChatMemory();
 memory.addSystemMessage("You are a helpful assistant!");
@@ -56,7 +57,7 @@ ChatRequest request = new ChatRequestBuilder()
         .setMemory(memory)
         .build();
 
-ChatResponse response = builder.build().sendMessage(request);
+ChatResponse response = apiService.sendMessage(request);
 
 System.out.println(response.withoutThink().getContent());
 ```

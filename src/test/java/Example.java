@@ -83,25 +83,21 @@ public class Example
 
     static void threadWithGroqExample()
     {
-        OpenAiApiServiceBuilder builder = new GroqApiServiceBuilder(apiKey);
+        OpenAiApiService apiService = new GroqApiServiceBuilder("API_KEY")
+                .build();
+
         ChatMemory memory = new ChatMemory();
+        memory.addSystemMessage("You are a helpful assistant!");
+        memory.addUserMessage("Hi!");
 
-        memory.addSystemMessage(systemMessage);
-        memory.addUserMessage("szia!");
+        ChatRequest request = new ChatRequestBuilder()
+                .setTemperature(1f)
+                .setModel(GroqModels.GEMMA2_9B_IT)
+                .setMemory(memory)
+                .build();
 
-       new Thread(() ->
-       {
-           // Use the service asynchronously
-           ChatRequest asyncRequest = new ChatRequestBuilder()
-                   .setTemperature(1f)
-                   .setModel(GroqModels.GEMMA2_9B_IT)
-                   .setMemory(memory)
-                   .build();
+        ChatResponse response = apiService.sendMessage(request);
 
-           ChatResponse asyncResponse = builder.build().sendMessage(asyncRequest);
-
-           System.out.println(asyncResponse.withoutThink().getContent());
-           JOptionPane.showMessageDialog(null, asyncResponse.withoutThink().getContent());
-       }).start();
+        System.out.println(response.withoutThink().getContent());
     }
 }
