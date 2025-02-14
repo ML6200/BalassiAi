@@ -1,3 +1,7 @@
+
+NOTE: This repository is still under maintenance.
+
+
 # Groq API Service
 
 Groq API Service is a Java library designed to simplify interactions with the Groq API as well as the OpenAI API for chat-based applications. It abstracts the complexities of sending chat requests and managing responses, enabling you to focus on building your application logic.
