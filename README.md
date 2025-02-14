@@ -6,9 +6,7 @@ Groq API Service is a Java library designed to simplify interactions with the Gr
 
 - [Features](#features)
 - [Usage](#usage)
-- [Examples](#examples)
-    - [LmStudio (localhost) Example](#lmstudio-localhost-example)
-    - [Groq Example](#groq-example)
+- [Example](#example)
 - [Contributing](#contributing)
 - [License](#license)
 - [Repository](#repository)
@@ -26,27 +24,24 @@ Groq API Service is a Java library designed to simplify interactions with the Gr
 
 This library is crafted to seamlessly integrate chat functionality into your Java application. It manages the low-level details of API requests and responses while maintaining session context through chat memory.
 
-## Examples
+## Example
 
-### LmStudio (localhost) Example
-
-This example demonstrates how to use the `OpenAiApiService` with basic functionality to send a chat request and display the response:
+This example shows how to use the `GroqApiServiceBuilder` for sending a chat request using a specific model and then displaying the response:
 
 ```java
-OpenAiApiService apiService = new OpenAiApiServiceBuilder()
-        .withUrl("http://localhost:1234/v1/chat/completions")
+OpenAiApiService apiService = new GroqApiServiceBuilder("API_KEY")
         .build();
 
 ChatMemory memory = new ChatMemory();
-memory.addUserMessage("who are you?");
+memory.addSystemMessage("You are a helpful assistant!");
+memory.addUserMessage("Hi!");
 
 ChatRequest request = new ChatRequestBuilder()
-        .setModel("deepseek-r1-distill-qwen-7b")
-        .addSystemMessage("systemMessage")
+        .setTemperature(1f)
+        .setModel(GroqModels.GEMMA2_9B_IT)
         .setMemory(memory)
         .build();
 
 ChatResponse response = apiService.sendMessage(request);
-String result = response.withoutThink().getContent();
 
-System.out.println(result);
+System.out.println(response.withoutThink().getContent());
