@@ -6,10 +6,29 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class representing a response from a chat API.
+ *
+ * This class is responsible for parsing the JSON response received from a chat API
+ * and extracting the relevant content. It handles different possible structures
+ * of the response, such as errors and choices, and provides methods to access
+ * the content and manipulate it if necessary.
+ */
 public class ChatResponse
 {
     private Content content;
 
+    /**
+     * Constructor that parses a JSON response from the chat API.
+     *
+     * This constructor takes a JSON response as a string, parses it using the
+     * Jackson library, and extracts the content. It handles different possible
+     * structures of the response, such as errors and choices, and sets the content
+     * accordingly. If an error occurs during parsing, it sets the content to an
+     * error message.
+     *
+     * @param jsonResponse the JSON response as a string
+     */
     public ChatResponse(String jsonResponse)
     {
         try
@@ -55,12 +74,30 @@ public class ChatResponse
         }
     }
 
+    /**
+     * Gets the content of the chat response.
+     *
+     * This method returns the content extracted from the chat API response.
+     * The content is returned as a string.
+     *
+     * @return the content as a string
+     */
     public String getContent()
     {
         return this.content.getContent();
     }
 
-
+    /**
+     * Removes <think> tags and their content from the chat response.
+     *
+     * This method processes the content of the chat response to remove any
+     * <think> tags and their enclosed content. It uses a regular expression
+     * to find and replace all occurrences of <think> tags and their content
+     * with an empty string. The resulting content is returned as a new
+     * Content object.
+     *
+     * @return a new Content object without <think> tags and their content
+     */
     public Content withoutThink()
     {
         if (this.content == null)

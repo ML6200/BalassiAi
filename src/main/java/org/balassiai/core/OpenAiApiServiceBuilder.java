@@ -16,6 +16,14 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
+/**
+ * Builder class for creating instances of OpenAiApiService.
+ *
+ * This class provides methods to set the URL, API key, and executor for the service.
+ * It also provides methods to build the service synchronously and asynchronously.
+ *
+ * @author Mark Lorincz
+ */
 public class OpenAiApiServiceBuilder
 {
     private static final Logger logger = LoggerFactory.getLogger(OpenAiApiServiceBuilder.class);
@@ -25,30 +33,58 @@ public class OpenAiApiServiceBuilder
     private String apiKey;
     private Executor executor = Executors.newSingleThreadExecutor();
 
+    /**
+     * Sets the URL for the OpenAiApiService.
+     *
+     * @param url the URL to set
+     * @return the current instance of OpenAiApiServiceBuilder
+     */
     public OpenAiApiServiceBuilder withUrl(String url)
     {
         this.url = url;
         return this;
     }
 
+    /**
+     * Sets the API key for the OpenAiApiService.
+     *
+     * @param apiKey the API key to set
+     * @return the current instance of OpenAiApiServiceBuilder
+     */
     public OpenAiApiServiceBuilder withApiKey(String apiKey)
     {
         this.apiKey = apiKey;
         return this;
     }
 
+    /**
+     * Sets the executor for asynchronous operations.
+     *
+     * @param executor the executor to set
+     * @return the current instance of OpenAiApiServiceBuilder
+     */
     public OpenAiApiServiceBuilder withExecutor(Executor executor)
     {
         this.executor = executor;
         return this;
     }
 
+    /**
+     * Builds an instance of OpenAiApiService synchronously.
+     *
+     * @return a new instance of OpenAiApiService
+     */
     public OpenAiApiService build()
     {
         validateFields();
         return new OpenAiApiServiceImpl(url, apiKey);
     }
 
+    /**
+     * Builds an instance of OpenAiApiService asynchronously.
+     *
+     * @return a CompletableFuture containing a new instance of OpenAiApiService
+     */
     public CompletableFuture<OpenAiApiService> buildAsync()
     {
         return CompletableFuture.supplyAsync(() ->
@@ -58,6 +94,11 @@ public class OpenAiApiServiceBuilder
         }, executor);
     }
 
+    /**
+     * Validates the fields before building the service.
+     *
+     * @throws IllegalStateException if the URL is not provided
+     */
     private void validateFields()
     {
         if (url == null || url.trim().isEmpty())
@@ -67,23 +108,45 @@ public class OpenAiApiServiceBuilder
         // Additional validation can be added here if needed
     }
 
+    /**
+     * Implementation of the OpenAiApiService interface.
+     *
+     * This class provides methods to send messages and get the API URL.
+     */
     private static class OpenAiApiServiceImpl implements OpenAiApiService
     {
         private final String url;
         private final String apiKey;
 
+        /**
+         * Constructor to initialize the OpenAiApiServiceImpl with a URL and API key.
+         *
+         * @param url the URL of the API
+         * @param apiKey the API key for authentication
+         */
         OpenAiApiServiceImpl(String url, String apiKey)
         {
             this.url = url;
             this.apiKey = apiKey;
         }
 
+        /**
+         * Gets the URL of the OpenAiApiService.
+         *
+         * @return the API URL as a string
+         */
         @Override
         public String getUrl()
         {
             return url;
         }
 
+        /**
+         * Sends a chat request to the OpenAI API.
+         *
+         * @param request the chat request to send
+         * @return the chat response from the API
+         */
         @Override
         public ChatResponse sendMessage(ChatRequest request)
         {
@@ -127,6 +190,13 @@ public class OpenAiApiServiceBuilder
             }
         }
 
+        /**
+         * Creates and configures an HttpURLConnection for the API request.
+         *
+         * @param jsonPayload the JSON payload to send
+         * @return the configured HttpURLConnection
+         * @throws IOException if an I/O error occurs
+         */
         private HttpURLConnection getHttpURLConnection(String jsonPayload) throws IOException
         {
             URL endpoint = new URL(url);
@@ -152,7 +222,12 @@ public class OpenAiApiServiceBuilder
             return connection;
         }
 
-
+        /**
+         * Creates an error response for the API request.
+         *
+         * @param errorMessage the error message to include in the response
+         * @return a ChatResponse containing the error message
+         */
         private ChatResponse createErrorResponse(String errorMessage)
         {
             try
