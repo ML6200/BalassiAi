@@ -1,6 +1,4 @@
-
-NOTE: This repository is still under maintenance.
-
+<h1 style="color: red;">This repository is still under development.</h1>
 
 # Groq API Service
 
