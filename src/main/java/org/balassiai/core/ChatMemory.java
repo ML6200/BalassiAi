@@ -1,6 +1,6 @@
 package org.balassiai.core;
 
-import org.balassiai.EmptyMessageException;
+import org.balassiai.exceptions.EmptyMessageException;
 
 import java.util.ArrayList;
 import java.util.List;

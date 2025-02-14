@@ -1,7 +1,7 @@
 package org.balassiai.core;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.balassiai.EmptyMessageException;
+import org.balassiai.exceptions.EmptyMessageException;
 
 import java.util.ArrayList;
 import java.util.Collections;

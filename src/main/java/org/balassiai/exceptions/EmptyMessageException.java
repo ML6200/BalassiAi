@@ -1,4 +1,4 @@
-package org.balassiai;
+package org.balassiai.exceptions;
 
 public class EmptyMessageException extends Exception
 {
