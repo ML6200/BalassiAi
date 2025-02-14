@@ -1,4 +1,4 @@
-> **Note:** This repository is currently under maintenance.
+> **Note:** This repository is currently under development.
 
 # Groq API Service
 
